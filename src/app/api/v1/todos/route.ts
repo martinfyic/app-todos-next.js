@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 
 import prisma from '@/lib/prisma';
+import { boolean, object, string } from 'yup';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -38,14 +39,27 @@ export async function GET(request: Request) {
   });
 }
 
+//* Validación de los objetos POST ----
+const postSchema = object({
+  description: string().required(),
+  complete: boolean().optional().default(false),
+});
+
 export async function POST(request: Request) {
-  const { description, complete } = await request.json();
+  try {
+    const { complete, description } = await postSchema.validate(await request.json());
+    const todo = await prisma.todo.create({ data: { description, complete } });
 
-  const todo = await prisma.todo.create({ data: { description, complete } });
-
-  if (!todo) {
-    return;
+    return NextResponse.json(
+      {
+        date: `${new Date().toLocaleString()}`,
+        url: request.url,
+        method: request.method,
+        data: todo,
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    return NextResponse.json(error, { status: 400 });
   }
-
-  return NextResponse.json({ post: todo }, { status: 201 });
 }
