@@ -37,3 +37,15 @@ export async function GET(request: Request) {
 		data: todos,
 	});
 }
+
+export async function POST(request: Request) {
+	const { description, complete } = await request.json();
+
+	const todo = await prisma.todo.create({ data: { description, complete } });
+
+	if (!todo) {
+		return;
+	}
+
+	return NextResponse.json({ post: todo }, { status: 201 });
+}
