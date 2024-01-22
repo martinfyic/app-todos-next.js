@@ -15,16 +15,11 @@ docker compose up -d
 ```
 
 2. Renombrar el `.env.sample` a `.env` y reemplazar los datos
-
-3. Ejecutar el `SEED` para crear la base de datos: [SEED](http://localhost:3000/api/seed)
-
-4. Correr servidor en desarrollo
-
-```bash
-npm run dev
-```
-
-4. Abrir [localhost](http://localhost:3000) en el navegador.
+3. Ejecutar comando `npm install`
+4. Ejecutar comando `npm run dev`
+5. Ejecutar los comandos de prisma `npx prisma migrate dev` y `npx prisma generate`
+6. Ejecutar el `SEED` para crear la base de datos: [SEED](http://localhost:3000/api/seed)
+7. Abrir [localhost](http://localhost:3000) en el navegador.
 
 ## Prisma Comands
 
