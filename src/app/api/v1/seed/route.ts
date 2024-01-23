@@ -40,6 +40,7 @@ export async function GET(request: Request) {
   });
 
   return NextResponse.json({
-    message: `Seed Ok! ${new Date().toLocaleString()}`,
+    data: new Date().toLocaleString(),
+    message: 'Seed executed OK',
   });
 }
