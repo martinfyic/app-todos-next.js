@@ -2,16 +2,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { CiLogout } from 'react-icons/ci';
+import { IoCalendarOutline, IoCheckboxOutline, IoListOutline } from 'react-icons/io5';
+
 import { SidebarItem } from './';
 
 const NAVLINKS = [
   {
+    icon: <IoCalendarOutline size={30} />,
     name: 'Dashboard',
     path: '/dashboard',
   },
   {
-    name: 'Categories',
-    path: '#',
+    icon: <IoCheckboxOutline size={30} />,
+    name: 'Rest TODOS',
+    path: '/dashboard/rest-todos',
+  },
+  {
+    icon: <IoListOutline size={30} />,
+    name: 'Server Actions',
+    path: '/dashboard/server-todos',
   },
 ];
 
@@ -45,8 +54,8 @@ export const Sidebar = () => {
         </div>
 
         <ul className='mt-8 space-y-2 tracking-wide'>
-          {NAVLINKS.map(({ name, path }) => (
-            <SidebarItem key={path} name={name} path={path} />
+          {NAVLINKS.map(({ icon, name, path }) => (
+            <SidebarItem key={path} icon={icon} name={name} path={path} />
           ))}
         </ul>
       </div>
