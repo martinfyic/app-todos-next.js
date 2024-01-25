@@ -31,12 +31,15 @@ export async function GET(request: Request) {
     skip: offset,
   });
 
-  return NextResponse.json({
-    date: `${new Date().toLocaleString()}`,
-    url: request.url,
-    method: request.method,
-    data: todos,
-  });
+  return NextResponse.json(
+    {
+      date: `${new Date().toLocaleString()}`,
+      url: request.url,
+      method: request.method,
+      data: todos,
+    },
+    { status: 200 }
+  );
 }
 
 //* Validación de los objetos POST ----
@@ -61,5 +64,27 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     return NextResponse.json(error, { status: 400 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    await prisma.todo.deleteMany({
+      where: {
+        complete: true,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        date: `${new Date().toLocaleString()}`,
+        url: request.url,
+        method: request.method,
+        data: 'Delete success',
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(error, { status: 204 });
   }
 }
