@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { IoTrashOutline } from 'react-icons/io5';
 
-import * as todosApi from '../helpers';
+import * as todosApi from '../../helpers';
 
 export const NewTodo = () => {
   const [description, setDescription] = useState('');
