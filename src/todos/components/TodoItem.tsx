@@ -24,7 +24,12 @@ export const TodoItem = ({ todo, toggleTodo }: Props) => {
             <IoSquareOutline size={30} />
           )}
         </div>
-        <div className='text-center sm:text-left'>{todo?.description}</div>
+        <div className='flex flex-col'>
+          <div className='text-center sm:text-left'>{todo?.description}</div>
+          <span className='mt-3 text-end'>
+            {todo.createdAt.toISOString().slice(0, 10)}
+          </span>
+        </div>
       </div>
     </div>
   );
