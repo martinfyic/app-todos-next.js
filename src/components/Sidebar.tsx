@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth';
 
 import { CiLogout } from 'react-icons/ci';
 import {
@@ -8,6 +10,7 @@ import {
   IoCheckboxOutline,
   IoCodeWorkingOutline,
   IoListOutline,
+  IoPersonOutline,
 } from 'react-icons/io5';
 
 import { SidebarItem } from './';
@@ -17,6 +20,11 @@ const NAVLINKS = [
     icon: <IoCalendarOutline size={30} />,
     name: 'Dashboard',
     path: '/dashboard',
+  },
+  {
+    icon: <IoPersonOutline size={30} />,
+    name: 'Profile',
+    path: '/dashboard/profile',
   },
   {
     icon: <IoCheckboxOutline size={30} />,
@@ -40,7 +48,14 @@ const NAVLINKS = [
   },
 ];
 
-export const Sidebar = () => {
+export const Sidebar = async () => {
+  const session = await getServerSession(authOptions);
+
+  const userName = session?.user?.name ?? 'No name';
+  const userAvatarUrl =
+    session?.user?.image ??
+    'https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp';
+
   return (
     <aside className='fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]'>
       <div>
@@ -48,8 +63,8 @@ export const Sidebar = () => {
           <Link href='/' title='home'>
             <Image
               src='https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg'
-              width={100}
-              height={100}
+              width={150}
+              height={150}
               alt='tailus logo'
             />
           </Link>
@@ -57,14 +72,14 @@ export const Sidebar = () => {
 
         <div className='mt-8 text-center'>
           <Image
-            src='https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp'
-            alt=''
-            width={50}
-            height={50}
-            className='m-auto h-10 w-10 rounded-full object-cover lg:h-28 lg:w-28'
+            src={userAvatarUrl}
+            alt={userName}
+            width={100}
+            height={100}
+            className='m-auto h-20 w-20 rounded-full object-cover lg:h-28 lg:w-28'
           />
           <h5 className='mt-4 hidden text-xl font-semibold text-gray-600 lg:block'>
-            Cynthia J. Watts
+            {userName}
           </h5>
           <span className='hidden text-gray-400 lg:block'>Admin</span>
         </div>
