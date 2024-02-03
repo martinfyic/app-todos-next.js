@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
+
+import { AuthProvider } from '@/auth';
+
 import './globals.css';
 
 const roboto = Roboto({
@@ -14,12 +17,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='es'>
-      <body className={roboto.className}>
-        <div className='bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-neutral-900 via-gray-900 to-black text-white'>
-          {children}
-        </div>
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang='es'>
+        <body className={roboto.className}>
+          <div className='bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-neutral-900 via-gray-900 to-black text-white'>
+            {children}
+          </div>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
