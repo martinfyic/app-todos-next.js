@@ -1,15 +1,24 @@
 import { WidgetItem } from '@/components';
-import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect('/api/auth/signin');
+  }
+
+  const userName = session.user?.name;
+  const userEmail = session.user?.email;
+
   return (
-    <main className='flex min-h-screen flex-col items-center gap-14 p-24'>
-      <h1 className='inline-block bg-gradient-to-tl from-sky-300 via-sky-400 to-sky-800 bg-clip-text text-center text-7xl font-semibold text-transparent'>
-        Practica Next.js 14
-      </h1>
-      <h2 className='inline-block bg-gradient-to-tl from-sky-300 via-sky-400 to-sky-800 bg-clip-text text-center text-3xl font-semibold text-transparent'>
-        Ejercicios de Next.js 14 para practicar el framework de React.js
-      </h2>
+    <main className='grid grid-cols-1 gap-6 text-slate-900 sm:grid-cols-2'>
+      <WidgetItem title='Usuario conectado S-Side'>
+        <h2 className='mt-8 text-center text-xl'>{userName}</h2>
+        <span className='text-l text-center'>{userEmail}</span>
+      </WidgetItem>
     </main>
   );
 }
