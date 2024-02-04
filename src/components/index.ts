@@ -1,5 +1,5 @@
-export { Sidebar } from './Sidebar';
-export { SidebarItem } from './SidebarItem';
+export * from './sidebar';
+
 export { TabBar } from './TabBar';
 export { TopMenu } from './TopMenu';
 export { WidgetItem } from './WidgetItem';
