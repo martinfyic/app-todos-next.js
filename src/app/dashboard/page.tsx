@@ -3,6 +3,11 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 
+export const metadata = {
+  title: 'Dashboard',
+  description: 'Aquí se listaran todos los productos seleccionados',
+};
+
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
 
