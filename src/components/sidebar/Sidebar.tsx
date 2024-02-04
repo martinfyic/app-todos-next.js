@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
 
-import { CiLogout } from 'react-icons/ci';
 import {
   IoBasketOutline,
   IoCalendarOutline,
@@ -12,8 +11,8 @@ import {
   IoListOutline,
   IoPersonOutline,
 } from 'react-icons/io5';
-
-import { SidebarItem } from './';
+import { SidebarItem } from './SidebarItem';
+import { LogoutButton } from './LogoutButton';
 
 const NAVLINKS = [
   {
@@ -90,12 +89,8 @@ export const Sidebar = async () => {
           ))}
         </ul>
       </div>
-
       <div className='-mx-6 flex items-center justify-between border-t px-6 pt-4'>
-        <button className='group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600'>
-          <CiLogout />
-          <span className='group-hover:text-gray-700'>Logout</span>
-        </button>
+        <LogoutButton />
       </div>
     </aside>
   );
