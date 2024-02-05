@@ -7,6 +7,9 @@ export default function ProfilePage() {
 
   const userName = session?.user?.name ?? 'No Name';
   const userEmail = session?.user?.email ?? 'No Email';
+  const userRole = session?.user?.roles;
+  const userIsActive = session?.user?.isActive ?? '';
+  const userUUID = session?.user?.id;
 
   return (
     <div>
@@ -17,9 +20,37 @@ export default function ProfilePage() {
         Client Side
       </h2>
 
-      <div className='flex flex-col items-center justify-center'>
-        <span>Usuario: {userName}</span>
-        <span>Email: {userEmail}</span>
+      <div className='mx-auto flex  max-w-xl flex-col items-center justify-center rounded-lg border border-sky-400 bg-stone-900 p-5'>
+        <p className='mb-4 text-xl'>
+          <span className='bg-gradient-to-r from-sky-600 via-cyan-400 to-purple-400 bg-clip-text text-transparent'>
+            ID de Usuario:
+          </span>{' '}
+          {userUUID}
+        </p>
+        <p className='mb-4 text-xl'>
+          <span className='bg-gradient-to-r from-sky-600 via-cyan-400 to-purple-400 bg-clip-text text-transparent'>
+            Nombre:
+          </span>{' '}
+          {userName}
+        </p>
+        <p className='mb-4 text-xl'>
+          <span className='bg-gradient-to-r from-sky-600 via-cyan-400 to-purple-400 bg-clip-text text-transparent'>
+            Email:
+          </span>{' '}
+          {userEmail}
+        </p>
+        <p className='mb-4 text-xl capitalize'>
+          <span className='bg-gradient-to-r from-sky-600 via-cyan-400 to-purple-400 bg-clip-text text-transparent'>
+            Roles:
+          </span>{' '}
+          {userRole?.join(', ')}
+        </p>
+        <p className='mb-4 text-xl capitalize'>
+          <span className='bg-gradient-to-r from-sky-600 via-cyan-400 to-purple-400 bg-clip-text text-transparent'>
+            Activo:
+          </span>{' '}
+          {userIsActive.toString()}
+        </p>
       </div>
     </div>
   );
