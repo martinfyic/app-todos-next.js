@@ -28,3 +28,10 @@ npx prisma init
 npx prisma migrate dev
 npx prisma generate
 ```
+
+## Nota 🗒
+
+Para desarrollo se crea por defecto el usuario y contraseña, puedes generar nuevos usuarios
+
+- **usuario:** userSeed@example.com
+- **password:** 123456

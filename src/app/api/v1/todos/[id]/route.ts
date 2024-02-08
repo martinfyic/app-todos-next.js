@@ -4,6 +4,7 @@ import { boolean, object, string } from 'yup';
 
 import prisma from '@/lib/prisma';
 import { Todo } from '@prisma/client';
+import { getUserSessionServer } from '@/auth/actions/auth-actions';
 
 interface Segments {
   params: {
@@ -13,11 +14,18 @@ interface Segments {
 
 //* Helper Get todo ----
 const getTodo = async (id: string): Promise<Todo | null> => {
+  const user = await getUserSessionServer();
+
+  if (!user) return null;
+
   const todo = await prisma.todo.findUnique({
     where: {
       id: id,
     },
   });
+
+  if (todo?.userId !== user.id) return null;
+
   return todo;
 };
 
@@ -48,6 +56,10 @@ const putSchema = object({
 });
 
 export async function PUT(request: Request, { params }: Segments) {
+  const user = await getUserSessionServer();
+  if (!user) {
+    return NextResponse.json('Not authorized', { status: 401 });
+  }
   const todo = await getTodo(params.id);
 
   if (!todo) {
@@ -64,6 +76,7 @@ export async function PUT(request: Request, { params }: Segments) {
     const updateTodo = await prisma.todo.update({
       where: {
         id: params.id,
+        userId: user.id,
       },
       data: {
         complete,
